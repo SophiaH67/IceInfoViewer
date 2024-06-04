@@ -1,24 +1,52 @@
-﻿namespace IceInfoViewer
+﻿using IceInfoViewer.Utils;
+
+namespace IceInfoViewer
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private bool isRefreshing;
+        
 
         public MainPage()
         {
             InitializeComponent();
+
+            // Do initial fetching of ice info
+            //Task.Run(async () => { 
+            //    await Refresh();
+            //    LoadingLabel.IsVisible = false;
+            //});
+
+            SetRefreshing(false);
+   
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void SetRefreshing(bool value)
         {
-            count++;
+            isRefreshing = value;
+            RefreshButton.Text = value ? "Refreshing..." : "Refresh";
+            RefreshButton.IsEnabled = !value;
+            IceInfoContainer.IsVisible = !value;
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        private async void OnRefreshClicked(object sender, EventArgs e) => await Refresh();
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private async Task Refresh() { 
+            if (isRefreshing)
+                return;
+
+            SetRefreshing(true);
+            IceInfo iceInfo;
+            try {
+                iceInfo = await IceInfoHelper.GetIceInfoAsync();
+            IceInfoSpeedLabel.Text = $"Speed: {iceInfo.Speed} km/h";
+            } catch (Exception ex) {
+                _ = DisplayAlert("Error", ex.Message, "OK");
+            } finally
+            {
+                SetRefreshing(false);
+            }
+
         }
     }
 
