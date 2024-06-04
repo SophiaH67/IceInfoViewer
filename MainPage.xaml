@@ -21,7 +21,11 @@
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
-                <Label x:Name="IceInfoSpeedLabel" Style="{StaticResource SubHeadline}" />
+            <Label x:Name="IceInfoClassLabel" Style="{StaticResource SubHeadline}" />
+            <Label x:Name="IceInfoSpeedLabel" Style="{StaticResource SubHeadline}" />
+            <Label x:Name="IceInfoInternetSpeedLabel" Style="{StaticResource SubHeadline}" />
+            <Label x:Name="IceInfoInternetStabilityLabel" Style="{StaticResource SubHeadline}" />
+
         </VerticalStackLayout>
 
         <Label

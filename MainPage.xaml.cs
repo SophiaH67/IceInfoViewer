@@ -45,6 +45,9 @@ namespace IceInfoViewer
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     IceInfoSpeedLabel.Text = $"Speed: {iceInfo.Speed} km/h";
+                    IceInfoClassLabel.Text = $"Class: {Util.UppercaseFirstChar(iceInfo.WagonClass)} Class";
+                    IceInfoInternetSpeedLabel.Text = $"Internet Speed: {Util.UppercaseFirstChar(iceInfo.Internet)}";
+                    IceInfoInternetStabilityLabel.Text = $"Internet Connectivity: {Util.CapitalizeEachWord(iceInfo.Connectivity.CurrentState.Replace('_', ' '))}";
                 });
             } catch (Exception ex) {
                 refreshTimer.Stop();
