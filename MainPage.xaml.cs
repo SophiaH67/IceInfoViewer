@@ -5,46 +5,58 @@ namespace IceInfoViewer
     public partial class MainPage : ContentPage
     {
         private bool isRefreshing;
+        private IDispatcherTimer refreshTimer;
         
 
         public MainPage()
         {
             InitializeComponent();
 
-            // Do initial fetching of ice info
-            //Task.Run(async () => { 
-            //    await Refresh();
-            //    LoadingLabel.IsVisible = false;
-            //});
+            // Initialize refresh timer
+            refreshTimer = Application.Current.Dispatcher.CreateTimer();
+            refreshTimer.Interval = TimeSpan.FromSeconds(2);
+            refreshTimer.Tick += (s, e) => _ = RefreshAsync();
+            refreshTimer.Start();
 
-            SetRefreshing(false);
-   
         }
 
         private void SetRefreshing(bool value)
         {
             isRefreshing = value;
-            RefreshButton.Text = value ? "Refreshing..." : "Refresh";
-            RefreshButton.IsEnabled = !value;
-            IceInfoContainer.IsVisible = !value;
+            RefreshingLabel.IsVisible = value;
         }
 
-        private async void OnRefreshClicked(object sender, EventArgs e) => await Refresh();
-
-        private async Task Refresh() { 
+        private async Task RefreshAsync() { 
             if (isRefreshing)
                 return;
 
-            SetRefreshing(true);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                SetRefreshing(true);
+            });
+
             IceInfo iceInfo;
             try {
                 iceInfo = await IceInfoHelper.GetIceInfoAsync();
-            IceInfoSpeedLabel.Text = $"Speed: {iceInfo.Speed} km/h";
+
+                if (iceInfo == null)
+                    throw new Exception("Failed to fetch ice info");
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    IceInfoSpeedLabel.Text = $"Speed: {iceInfo.Speed} km/h";
+                });
             } catch (Exception ex) {
-                _ = DisplayAlert("Error", ex.Message, "OK");
+                refreshTimer.Stop();
+                await DisplayAlert("Error", ex.Message, "OK");
+                refreshTimer.Start();
+
             } finally
             {
-                SetRefreshing(false);
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    SetRefreshing(false);
+                });
             }
 
         }

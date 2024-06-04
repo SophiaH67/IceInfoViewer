@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="IceInfoViewer.MainPage">
-
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25"
-            x:Name="AppContainer">
+        <FlexLayout
+            Direction="Column"
+            JustifyContent="SpaceBetween"
+            >
+            <VerticalStackLayout
+            x:Name="IceInfoContainer"
+            >
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"
@@ -19,26 +21,13 @@
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
-            <VerticalStackLayout
-                x:Name="IceInfoContainer"
-                >
-                <Label x:Name="IceInfoSpeedLabel" />
-            </VerticalStackLayout>
-
-            <Label
-                Text="Loading..."
-                x:Name="LoadingLabel"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <Button
-                x:Name="RefreshButton"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnRefreshClicked"
-                HorizontalOptions="Fill" />
+                <Label x:Name="IceInfoSpeedLabel" Style="{StaticResource SubHeadline}" />
         </VerticalStackLayout>
-    </ScrollView>
+
+        <Label
+            Text="Refreshing..."
+            x:Name="RefreshingLabel"
+            />
+    </FlexLayout>
 
 </ContentPage>
