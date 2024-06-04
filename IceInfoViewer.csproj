@@ -24,7 +24,7 @@
 		<ApplicationTitle>IceInfoViewer</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.iceinfoviewer</ApplicationId>
+		<ApplicationId>gay.sophiah.iceinfoviewer</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
