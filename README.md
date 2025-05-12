@@ -1,8 +1,8 @@
 # Ice Info Viewer
 
-A simple MAUI app writen in C# to fetch and display api data from the Deutsche Bahn's ICE series of trains.
+![Ice Info Logo](https://github.com/user-attachments/assets/114737a1-7e1c-4dcc-afd9-6f64ce6aedf0)
 
-I wrote this app while on trains as a fun distraction.
+A simple MAUI app writen in C# to fetch and display api data from the Deutsche Bahn's ICE series of trains.
 
 ![image](https://github.com/user-attachments/assets/7990a96d-0b31-4729-a861-a1f79d8c07cc)
 
